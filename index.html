@@ -1,20 +1,272 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Three.js</title>
-        <link rel="stylesheet" href="styles.css">
-        <script type="importmap">
-          {
-            "imports": {
-              "three": "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js",
-              "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/"
-            }
-          }
-        </script>
-    </head>
-    <body>
-        <div id="webgl"></div>
-        <script src="lib/dat.gui.min.js"></script>
-        <script type="module" src="src/main.js"></script>
-    </body>
+  <head>
+    <title>Three.js Custom Controls</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="webgl"></div>
+    <input
+      type="file"
+      id="texture-uploader"
+      accept="image/*"
+      style="display: none"
+    />
+
+    <div id="custom-controls">
+      <div class="control-section open">
+        <div class="section-header">Điều khiển khối hộp</div>
+        <div class="section-content">
+          <div class="control-row">
+            <label>Vị trí X</label
+            ><input
+              type="range"
+              id="cube-pos-x"
+              min="-10"
+              max="10"
+              value="0"
+              step="0.1"
+            /><span id="cube-pos-x-val">0</span>
+          </div>
+          <div class="control-row">
+            <label>Vị trí Y</label
+            ><input
+              type="range"
+              id="cube-pos-y"
+              min="0"
+              max="10"
+              value="0.5"
+              step="0.1"
+            /><span id="cube-pos-y-val">0.5</span>
+          </div>
+          <div class="control-row">
+            <label>Vị trí Z</label
+            ><input
+              type="range"
+              id="cube-pos-z"
+              min="-10"
+              max="10"
+              value="0"
+              step="0.1"
+            /><span id="cube-pos-z-val">0</span>
+          </div>
+          <div class="control-row">
+            <label>Xoay X</label
+            ><input
+              type="range"
+              id="cube-rot-x"
+              min="0"
+              max="3.14"
+              value="0"
+              step="0.01"
+            /><span id="cube-rot-x-val">0</span>
+          </div>
+          <div class="control-row">
+            <label>Xoay Y</label
+            ><input
+              type="range"
+              id="cube-rot-y"
+              min="0"
+              max="3.14"
+              value="0"
+              step="0.01"
+            /><span id="cube-rot-y-val">0</span>
+          </div>
+          <div class="control-row">
+            <label>Xoay Z</label
+            ><input
+              type="range"
+              id="cube-rot-z"
+              min="0"
+              max="3.14"
+              value="0"
+              step="0.01"
+            /><span id="cube-rot-z-val">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-section">
+        <div class="section-header">Điều khiển ánh sáng</div>
+        <div class="section-content">
+          <div class="control-subsection">
+            <div class="subsection-header">Đèn 1</div>
+            <div class="subsection-content">
+              <div class="control-row">
+                <label>Cường độ</label
+                ><input
+                  type="range"
+                  id="light1-intensity"
+                  min="0"
+                  max="40"
+                  value="20"
+                  step="1"
+                /><span id="light1-intensity-val">20</span>
+              </div>
+              <div class="control-row">
+                <label>Vị trí X</label
+                ><input
+                  type="range"
+                  id="light1-pos-x"
+                  min="-20"
+                  max="20"
+                  value="5"
+                  step="0.5"
+                /><span id="light1-pos-x-val">5</span>
+              </div>
+              <div class="control-row">
+                <label>Vị trí Y</label
+                ><input
+                  type="range"
+                  id="light1-pos-y"
+                  min="0"
+                  max="20"
+                  value="3"
+                  step="0.5"
+                /><span id="light1-pos-y-val">3</span>
+              </div>
+              <div class="control-row">
+                <label>Vị trí Z</label
+                ><input
+                  type="range"
+                  id="light1-pos-z"
+                  min="-20"
+                  max="20"
+                  value="-5"
+                  step="0.5"
+                /><span id="light1-pos-z-val">-5</span>
+              </div>
+            </div>
+          </div>
+          <div class="control-subsection">
+            <div class="subsection-header">Đèn 2</div>
+            <div class="subsection-content">
+              <div class="control-row">
+                <label>Cường độ</label
+                ><input
+                  type="range"
+                  id="light2-intensity"
+                  min="0"
+                  max="40"
+                  value="20"
+                  step="1"
+                /><span id="light2-intensity-val">20</span>
+              </div>
+              <div class="control-row">
+                <label>Vị trí X</label
+                ><input
+                  type="range"
+                  id="light2-pos-x"
+                  min="-20"
+                  max="20"
+                  value="-5"
+                  step="0.5"
+                /><span id="light2-pos-x-val">-5</span>
+              </div>
+              <div class="control-row">
+                <label>Vị trí Y</label
+                ><input
+                  type="range"
+                  id="light2-pos-y"
+                  min="0"
+                  max="20"
+                  value="3"
+                  step="0.5"
+                /><span id="light2-pos-y-val">3</span>
+              </div>
+              <div class="control-row">
+                <label>Vị trí Z</label
+                ><input
+                  type="range"
+                  id="light2-pos-z"
+                  min="-20"
+                  max="20"
+                  value="-5"
+                  step="0.5"
+                /><span id="light2-pos-z-val">-5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-section">
+        <div class="section-header">Texture & Material</div>
+        <div class="section-content">
+          <div class="control-subsection">
+            <div class="subsection-header">Plane Material</div>
+            <div class="subsection-content">
+              <div class="control-row">
+                <label>Roughness</label
+                ><input
+                  type="range"
+                  id="plane-roughness"
+                  min="0"
+                  max="1"
+                  value="0.2"
+                  step="0.01"
+                /><span id="plane-roughness-val">0.2</span>
+              </div>
+              <div class="control-row">
+                <label>Metalness</label
+                ><input
+                  type="range"
+                  id="plane-metalness"
+                  min="0"
+                  max="1"
+                  value="0"
+                  step="0.01"
+                /><span id="plane-metalness-val">0</span>
+              </div>
+              <button id="upload-plane-btn">Upload Plane Texture</button>
+            </div>
+          </div>
+          <div class="control-subsection">
+            <div class="subsection-header">Cube Material</div>
+            <div class="subsection-content">
+              <div class="control-row">
+                <label>Roughness</label
+                ><input
+                  type="range"
+                  id="cube-roughness"
+                  min="0"
+                  max="1"
+                  value="0"
+                  step="0.01"
+                /><span id="cube-roughness-val">0</span>
+              </div>
+              <div class="control-row">
+                <label>Metalness</label
+                ><input
+                  type="range"
+                  id="cube-metalness"
+                  min="0"
+                  max="1"
+                  value="1"
+                  step="0.01"
+                /><span id="cube-metalness-val">1</span>
+              </div>
+              <button id="upload-cube-btn">Upload Cube Texture</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
 </html>
