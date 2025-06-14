@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { OrbitControls } from "./OrbitControls.js"; // Đã thay đổi: Sử dụng tệp OrbitControls cục bộ
 
 function init() {
   let scene = new THREE.Scene();
